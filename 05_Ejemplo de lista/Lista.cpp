@@ -58,7 +58,7 @@ struct Nodo{
 
 //metodo para insertar
 void insertarLista(Nodo *&, int);
-	void mostrarlista(nodo *);
+	void mostrarlista(Nodo *&);
 	
 int main(){
 	//declarar mi variable de la lista
@@ -68,11 +68,12 @@ int main(){
 	int op = 1,c,i= 0,valores;
 	
 	cout<<"Trabajando con listas (simples, doblemente enlazadas, circulares y circulares dobles)"<<endl;
-	while(op!=3){
+	while(op!=4){
 		cout<<"Ejemplo de la lista simple"<<endl;
 		cout<<"1.- Insertar nuevo valor de la lista"<<endl;
 		cout<<"2.- Ver la lista"<<endl;
-		cout<<"3.- Salir"<<endl;
+		cout<<"3.-Eliminar valor de la lista"<<endl;
+		cout<<"4.- Salir"<<endl;
 		cin>>op;
 		
 		switch(op){
@@ -93,7 +94,12 @@ int main(){
 				break;
 			default:
 				cout<<"Gracias por estar aqui uwu";
-			
+			case 3: cout<<"\nDigite el elemento que desea eliminar: ";
+			         cin>>"Dato";
+			         eliminarNodo(lista,dato);
+			         cout<<"\n";
+			         system("pause");
+			         break;
 		}
 		
 	}
@@ -125,7 +131,7 @@ void insertarLista(Nodo *&lista, int c){
 	}
 	
 	
-	void mostrarlista(nodo *lista){
+	void mostrarLista(nodo *lista){
 		Nodo * recurso = new Nodo();
 		recurso = lista;
 		
@@ -135,8 +141,32 @@ void insertarLista(Nodo *&lista, int c){
 			recurso=recurso-> siguiente;
 		}
 	}
-
-//tarea
-/*
-imprmir la lista y que elimine el ultimo elemento de la lista 
-*/
+	void eliminarNodo(Nodo *&lista,int n){
+		//Preguntar si la lista no esta vacia
+		if(lista != NULL){
+			Nodo *aux_borrar;
+			Nodo *anterior = NULL;
+			
+			aux_borrar= lista;
+			//Recorrer la lista
+			while((aux_borrar != NULL) && (aux_borrar->dato != n)){
+				anterior = aux_borrar;
+				aux_borrar = aux_borrar-> siguiente;
+				}
+		//El elemnto no a sido encontrado 
+		if(aux_borrar == NULL){
+			cout<<"El elemnto no a sido encontrado";
+		}
+		//El primer elemento es el que vamos a elimnar
+		else if(anterior == NULL){
+			lista = lista->siguiente;
+			delete aux_borrar;
+			}
+			//El elemento esta en la lista pero, no es el primer nodo
+			else{
+				anterior->siguiente = aux_borrar->siguiente;
+				delete aux_borrar;
+			}
+		}
+		
+	}
